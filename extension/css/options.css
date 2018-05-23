@@ -1,0 +1,42 @@
+.main {
+	padding: 20px;
+}
+
+.nav-sidebar {
+	margin: 10px -20px;
+}
+.nav-sidebar li span {
+	color: #999;
+}
+.nav-sidebar li a,
+.nav-sidebar li span {
+	padding: 10px 20px;
+	display: block;
+}
+.nav-sidebar .active a,
+.nav-sidebar .active a:hover,
+.nav-sidebar .active a:focus {
+	background: #428bca;
+	color: #fff;
+}
+
+.page-header {
+	font-size: 1.75em;
+	margin-top: 0;
+}
+.page-header small {
+	line-height: 175%;
+}
+
+.sidebar {
+	padding-top: 20px;
+}
+.sidebar h2 {
+	border-bottom: 1px solid #ddd;
+	font-size: 1.25em;
+	padding: 10px 0;
+}
+
+a span.glyphicon {
+	font-size: 75%;
+}

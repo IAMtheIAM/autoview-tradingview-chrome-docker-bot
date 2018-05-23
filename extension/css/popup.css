@@ -1,0 +1,21 @@
+body {
+	padding: 10px 0;
+	min-width: 325px;
+}
+.page-header {
+	border: 0;
+	font-size: 2em;
+	margin: 0 0 10px 0;
+	padding: 0;
+}
+.page-header small {
+	line-height: 2em;
+}
+a span.glyphicon {
+	font-size: 75%;
+}
+
+#exchanges ul.list-group {
+	height: 269px;
+	overflow-x: auto;
+}

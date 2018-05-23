@@ -1,0 +1,3 @@
+2018/05/23-14:23:35.123 4279 Reusing MANIFEST /home/node/app/chrome-profile/Default/Sync Data/LevelDB/MANIFEST-000001
+2018/05/23-14:23:35.124 4279 Recovering log #3
+2018/05/23-14:23:35.124 4279 Reusing old log /home/node/app/chrome-profile/Default/Sync Data/LevelDB/000003.log 

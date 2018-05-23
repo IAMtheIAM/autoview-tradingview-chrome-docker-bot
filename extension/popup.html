@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<title>Status - Autoview</title>
+
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/popup.css">
+
+		<script src="js/_1Broker.js"></script>
+		<script src="js/Binance.js"></script>
+		<script src="js/Bitfinex.js"></script>
+		<script src="js/BitMEX.js"></script>
+		<script src="js/BitMEXTestnet.js"></script>
+		<script src="js/Bittrex.js"></script>
+		<script src="js/GDAX.js"></script>
+		<script src="js/Kraken.js"></script>
+		<script src="js/Kucoin.js"></script>
+		<script src="js/OKCoin.js"></script>
+		<script src="js/OKEX.js"></script>
+		<script src="js/Poloniex.js"></script>
+		<script src="js/PWP.js"></script>
+
+		<script src="js/analytics.js"></script>
+		<script src="js/buy.js"></script>
+		<script src="js/Broker.js"></script>
+		<script src="js/Cache.js"></script>
+		<script src="js/Exchange.js"></script>
+		<script src="js/Request.js"></script>
+		<script src="js/Storage.js"></script>
+		<script src="js/Template.js"></script>
+		<script src="js/functions.js"></script>
+		<script src="js/delegate.js"></script>
+		<script src="js/md5.js"></script>
+		<script src="js/popup.js"></script>
+	</head>
+
+	<body>
+		<div class="container-fluid">
+			<h1 class="page-header text-center">Autoview</h1>
+
+			<div id="chrome-account" class="panel panel-default">
+				<div class="panel-heading">
+					<span class="badge pull-right">?</span>
+					<a href="https://support.google.com/chrome/answer/185277" target="_blank">
+						<strong>Chrome Account</strong>
+						<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
+					</a>
+				</div>
+			</div>
+
+			<div id="exchanges" class="panel panel-default">
+				<div class="panel-heading">
+					<span class="badge pull-right">?</span>
+					<strong>Exchanges</strong>
+				</div>
+				<ul class="list-group">
+					<template id="exchange-link">
+						<li id="exchange-{exchange.id}" class="list-group-item">
+							<span class="badge pull-right">?</span>
+							<a href="{exchange.url}" target="_blank">
+								{exchange.name}
+								<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
+							</a>
+						</li>
+					</template>
+				</ul>
+			</div>
+
+			<div id="tradingview" class="panel panel-default">
+				<div class="panel-heading">
+					<span class="badge pull-right">?</span>
+					<a href="https://www.tradingview.com/" target="_blank">
+						<strong>TradingView</strong>
+						<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
+					</a>
+				</div>
+			</div>
+
+			<p class="text-center">
+				<button id="settings" class="btn btn-primary">
+					<span class="glyphicon glyphicon-cog"></span> Change Settings
+				</button>
+				<button id="faq" class="btn btn-primary">
+					<span class="glyphicon glyphicon-info-sign"></span> FAQ
+				</button>
+			</p>
+		</div>
+	</body>
+</html>

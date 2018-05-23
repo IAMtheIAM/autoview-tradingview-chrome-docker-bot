@@ -1,0 +1,99 @@
+{
+	"author": "Blocknet",
+	"background": {
+		"persistent": true,
+		"scripts": [
+			"js/jssha.js",
+
+			"js/analytics.js",
+			"js/buy.js",
+			"js/functions.js",
+			"js/delegate.js",
+			"js/md5.js",
+			"js/Alert.js",
+		  	"js/Cache.js",
+			"js/Command.js",
+			"js/Exchange.js",
+			"js/NumberObject.js",
+			"js/Request.js",
+			"js/Storage.js",
+			"js/TradingView.js",
+			"js/TradingViewListener.js",
+
+			"js/_1Broker.js",
+			"js/Binance.js",
+			"js/Bitfinex.js",
+			"js/BitMEX.js",
+			"js/BitMEXTestnet.js",
+			"js/Bittrex.js",
+			"js/GDAX.js",
+			"js/Kraken.js",
+			"js/Kucoin.js",
+			"js/OKCoin.js",
+			"js/OKEX.js",
+			"js/Poloniex.js",
+			"js/PWP.js",
+
+			"js/Broker.js",
+			"background.js"
+		]
+	},
+	"browser_action": {
+		"default_icon": {
+			"19": "img/icons/19.png",
+			"38": "img/icons/38.png"
+		},
+		"default_popup": "popup.html",
+		"default_title": "Autoview"
+	},
+	"content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self'",
+    "content_scripts": [ {
+		"js": [
+			"js/functions.js",
+			"content.js"
+		],
+		"matches": [ "https://*.tradingview.com/*" ],
+		"run_at": "document_start"
+	} ],
+	"description": "TradingView can now become automated trading.",
+	"icons": {
+		"16": "img/icons/16.png",
+		"48": "img/icons/48.png",
+		"128": "img/icons/128.png"
+	},
+	"key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2xrq0RiT/UCRmRdKgDF7i8D8ytwJT19UyvDeYTpIv/4AbTcNyOEV0EY82GCi3ejV+wE0Yo8hpySC9lw07C2Q0AOwbi6PeF/JXQmM4MNqklx6wvjL2C4mWlCr0Q14YH/DahPP36Hzxz7AwSsNfmzqRwFA2u74mbdGXxZ4V4UpycYnTnf4V265gXcpUC4vP13tuTgB6xTnGvEQlFItSTud1wHEgSvpR96sNmLEug7xge+t+rnFtGpfiH3sJuZFpX9VipmY3gV5xbvKC5B6BjA4ouuJEqCqf3B3io47Q07aelzPlA+BsLYyAZjL145JidmpIju7oYmFALTG61MHkFt5+wIDAQAB",
+	"manifest_version": 2,
+	"minimum_chrome_version": "45.0",
+	"name": "Autoview",
+	"optional_permissions": [
+		"clipboardWrite",
+		"webRequest",
+		"webRequestBlocking",
+		"https://*.1broker.com/*",
+	  	"https://*.binance.com/*",
+	  	"https://*.bitfinex.com/*",
+		"https://*.bitmex.com/*",
+		"https://*.bittrex.com/*",
+	  	"https://*.gdax.com/*",
+		"https://*.kraken.com/*",
+		"https://*.kucoin.com/*",
+		"https://*.okcoin.com/*",
+		"https://*.okex.com/*",
+		"https://*.poloniex.com/*"
+	],
+	"options_page": "options.html",
+	"permissions": [
+	  	"identity",
+	  	"identity.email",
+		"storage",
+		"https://*.tradingview.com/*"
+	],
+	"short_name": "Autoview",
+	"version": "6.13.1",
+	"web_accessible_resources": [
+		"js/analytics.js",
+		"js/functions.js",
+		"js/Autoview.js",
+		"content_helper.js"
+	]
+}

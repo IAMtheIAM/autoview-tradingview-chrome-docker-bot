@@ -1,0 +1,1633 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<title>Options - Autoview</title>
+
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/options.css">
+
+		<script src="js/jssha.js"></script>
+
+		<script src="js/Alert.js"></script>
+		<script src="js/analytics.js"></script>
+		<script src="js/buy.js"></script>
+		<script src="js/Broker.js"></script>
+		<script src="js/Cache.js"></script>
+		<script src="js/Command.js"></script>
+		<script src="js/Exchange.js"></script>
+		<script src="js/NumberObject.js"></script>
+		<script src="js/Request.js"></script>
+		<script src="js/Storage.js"></script>
+		<script src="js/Template.js"></script>
+		<script src="js/functions.js"></script>
+		<script src="js/delegate.js"></script>
+		<script src="js/md5.js"></script>
+		<script src="js/options.js"></script>
+
+		<script src="js/_1Broker.js"></script>
+		<script src="js/Binance.js"></script>
+		<script src="js/Bitfinex.js"></script>
+		<script src="js/BitMEX.js"></script>
+		<script src="js/BitMEXTestnet.js"></script>
+		<script src="js/Bittrex.js"></script>
+		<script src="js/GDAX.js"></script>
+		<script src="js/Kraken.js"></script>
+		<script src="js/Kucoin.js"></script>
+		<script src="js/OKCoin.js"></script>
+		<script src="js/OKEX.js"></script>
+		<script src="js/Poloniex.js"></script>
+		<script src="js/PWP.js"></script>
+
+		<script src="js/jquery/jquery-3.1.1.min.js"></script>
+		<script src="js/jquery/bootstrap.js"></script>
+	</head>
+
+	<body>
+		<div class="container-fluid">
+			<div class="row">
+				<div id="sidebar" class="col-sm-3 col-md-2 sidebar">
+					<h1 class="page-header">
+						<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+						Autoview
+					</h1>
+					<ul class="nav nav-sidebar">
+						<li><a href="#" data-page="alert-syntax">Alert Syntax</a></li>
+						<li><a href="#" data-page="change-log">Change log</a></li>
+						<li><a href="#" data-page="help">Help</a></li>
+						<li><a href="#" data-page="settings">Permissions</a></li>
+						<li><a href="#" data-page="coupons">Coupons &amp; Referrals</a></li>
+					</ul>
+
+					<h2 class="page-header">
+						<span class="glyphicon glyphicon-transfer" aria-hidden="true"></span>
+						Exchanges
+					</h2>
+					<ul id="exchange-links" class="nav nav-sidebar">
+						<template id="exchange-link">
+							<li><a href="#" data-page="exchange-{exchange.id}">{exchange.name}</a></li>
+						</template>
+					</ul>
+				</div>
+				<div class="col-sm-9 col-md-10 main">
+					<article id="alert-syntax" class="hide">
+						<h1 class="page-header">
+							<span class="glyphicon glyphicon-time"></span>
+							Alert Syntax
+						</h1>
+						<p>
+							To connect <strong>TradingView</strong> and <strong>Autoview</strong>, you will need to place at least one command (examples below) in the Message section of an Alert.
+						</p>
+						<div class="panel panel-default">
+							<table class="table table-striped">
+								<colgroup>
+									<col style="width: 20%" />
+									<col style="width: 5%" />
+									<col style="width: 10%" />
+									<col style="width: 20%" />
+									<col style="width: 45%" />
+								</colgroup>
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Key</th>
+										<th>Default</th>
+										<th>Values</th>
+										<th>Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<th>Account</th>
+										<td><code>a</code></td>
+										<td>*</td>
+										<td>Anything (excluding special characters)</td>
+										<td>The alias for the API credentials you want to use for this command.</td>
+									</tr>
+									<tr>
+										<th>Book</th>
+										<td><code>b</code></td>
+										<td class="text-muted">all</td>
+										<td>buy, long; sell, short</td>
+										<td>The side of the market you would like to play.</td>
+									</tr>
+									<tr>
+										<th>Cancel / Close</th>
+										<td><code>c</code></td>
+										<td class="text-muted">n/a</td>
+										<td>order, position</td>
+										<td>Used to cancel open orders or close open positions.</td>
+									</tr>
+									<tr>
+										<th>Cancel / Close Maximum</th>
+										<td><code>cm</code></td>
+										<td class="text-muted">all</td>
+										<td>Static: #, %<br />
+											Random: #-#, %-%</td>
+										<td>Cancels orders or closes positions (see <code>cmo</code> for ordering).</td>
+									</tr>
+									<tr>
+										<th>Cancel / Close Maximum Order</th>
+										<td><code>cmo</code></td>
+										<td>oldest</td>
+										<td>newest, oldest; lowest, highest; smallest, biggest; random</td>
+										<td>How the orders are sorted for canceling.<br />
+											How the positions are sorted for closing.</td>
+									</tr>
+									<tr>
+										<th>Delay</th>
+										<td><code>delay</code></td>
+										<td class="text-muted">n/a</td>
+										<td>&gt; 0</td>
+										<td>Delay allows for a pause (in seconds) between commands within the same alert (e.g. <code>delay=10</code>).</td>
+									</tr>
+									<tr>
+										<th>Disabled</th>
+										<td><code>d</code></td>
+										<td>0</td>
+										<td>0, 1</td>
+										<td>Prevents any live action from the command.<br />
+											This is helpful for debugging by outputting the live parameters.</td>
+									</tr>
+									<tr>
+										<th>Exchange</th>
+										<td><code>e</code></td>
+										<td><var>Chart Symbol</var></td>
+										<td>1Broker, Binance, Kraken, ...</td>
+										<td>The receiving exchange for your command.</td>
+									</tr>
+									<tr>
+										<th>Fixed Price</th>
+										<td><code>fp</code></td>
+										<td class="text-muted">n/a</td>
+										<td>Static: #<br />
+											Random: #-#</td>
+										<td>The literal price in which to place an order or close a position.</td>
+									</tr>
+									<tr>
+										<th>Hidden / Iceberg</th>
+										<td><code>h</code></td>
+										<td class="text-muted">n/a</td>
+										<td>Static: #, %<br />
+											Random: #-#, %-%</td>
+										<td><strong>Bitfinex</strong>: Whether the order is to be hidden (i.e. <code>h=1</code>).<br/>
+											<strong>BitMEX</strong>: Sets the order to be hidden if 0. If &gt; 0 this portion of the position to be visible (i.e. Iceberg).
+										</td>
+									</tr>
+									<tr>
+										<th>Leverage</th>
+										<td><code>l</code></td>
+										<td class="text-muted">all</td>
+										<td>&gt;= 0</td>
+										<td>Leverage allows your available balance to be multiplied but increases risk.</td>
+									</tr>
+									<tr>
+										<th>Price</th>
+										<td><code>p</code></td>
+										<td>0</td>
+										<td>Static: #, %<br />
+											Random: #-#, %-%</td>
+										<td>The amount to undercut or overcut the top order in the book.</td>
+									</tr>
+									<tr>
+										<th>Quantity</th>
+										<td><code>q</code></td>
+										<td>100%</td>
+										<td>Static: #, %<br />
+											Random: #-#, %-%</td>
+										<td>The portion of your balance or position you would like to effect.</td>
+									</tr>
+									<tr>
+										<th>Shared</th>
+										<td><code>shared</code></td>
+										<td>0</td>
+										<td>0, 1</td>
+										<td><strong>1Broker</strong><br />
+											Whether or not the trade will be visible to others.
+										</td>
+									</tr>
+									<tr>
+										<th>Symbol</th>
+										<td><code>s</code></td>
+										<td><var>Chart Symbol</var></td>
+										<td>BTCUSD3M, LTCUSD, PINKBTC, ...</td>
+										<td>The receiving exchange's market for your command.</td>
+									</tr>
+									<tr>
+										<th>Stop Loss</th>
+										<td><code>sl</code></td>
+										<td class="text-muted">n/a</td>
+										<td>Static: #, %<br />
+											Random: #-#, %-%</td>
+										<td><strong>Bitfinex</strong>: Whether the order is a stop order (i.e. <code>sl=1</code>)<br/>
+										<strong>1Broker, Binance, BitMEX</strong>: Provided value is applied to the position's entry price.<br />
+											<strong>Kraken</strong>: Triggers the order (buy or sell) when the last traded price hits the stop price.
+										</td>
+									</tr>
+									<tr>
+										<th>Order Type</th>
+										<td><code>t</code></td>
+										<td>limit</td>
+										<td>limit, market, fok, ioc, post,<br />
+											close, open, settle</td>
+										<td><strong>Limit</strong>: Order will be placed in the books to await being filled.<br />
+											<strong>Market</strong>: Place order in the book for immediate filling (<code>p</code> is ignored).<br />
+											<strong><abbr title="Fill Or Kill">FOK</abbr></strong>: Fill Or Kill orders will either completely fill or be aborted.<br />
+											<strong><abbr title="Immediate Or Cancel">IOC</abbr></strong>: Immediate Or Cancel orders can be partially or completely filled, but any remaining portion is cancelled.<br />
+											<strong>Post</strong>: If any part of the order would have executed, it will be cancelled instead.<br />
+											<strong>Close / Open</strong>: Can be used together with <code>c=order</code> for specific order types.<br />
+											<strong>Settle <small>(Kraken only)</small></strong>: Settle position(s) at the original order price. <a href="https://support.kraken.com/hc/en-us/articles/218741078-What-is-settling-a-position-and-how-do-I-do-it-" target="_blank">Learn more</a>
+										</td>
+									</tr>
+									<tr>
+										<th>Take Profit</th>
+										<td><code>tp</code></td>
+										<td class="text-muted">n/a</td>
+										<td>Static: #, %<br />
+											Random: #-#, %-%</td>
+										<td><strong>1Broker, Binance, BitMEX</strong>: Provided value is applied to the position's entry price.<br/>
+											<strong>Kraken</strong>: Triggers the order (buy or sell) when the last price hits the profit price.
+										</td>
+									</tr>
+									<tr>
+										<th>Trailing Stop</th>
+										<td><code>ts</code></td>
+										<td class="text-muted">n/a</td>
+										<td>Static: #, %<br />
+											Random: #-#, %-%</td>
+										<td><strong>Bitfinex</strong>: Whether the order is a trailing stop (i.e. <code>ts=1</code>)<br/>
+											<strong>Kraken</strong>: Triggers a market order (buy or sell) when the last traded price goes against the position by the stop offset amount.
+										</td>
+									</tr>
+									<tr>
+										<th>Unit</th>
+										<td><code>u</code></td>
+										<td>contracts</td>
+										<td>contracts, currency</td>
+										<td>
+											The quantity (<code>q</code>) unit being provided.
+										</td>
+									</tr>
+									<tr>
+										<th>Yield</th>
+										<td><code>y</code></td>
+										<td>balance</td>
+										<td>balance, equity</td>
+										<td><strong>Balance</strong>: Your available balance excluding open orders/positions.<br />
+											<strong>Equity</strong>: Your available balance including profit/loss.</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<h2 class="page-header">
+							<span class="glyphicon glyphicon-pushpin"></span>
+							Examples
+						</h2>
+						<div class="panel panel-default">
+							<table class="table">
+								<colgroup>
+									<col style="width: 42%" />
+									<col style="width: 58%" />
+								</colgroup>
+								<thead>
+									<tr>
+										<th>Command</th>
+										<th>Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><kbd>c=order t=open</kbd></td>
+										<td>Cancel all open orders.</td>
+									</tr>
+									<tr>
+										<td><kbd>c=position t=market</kbd></td>
+										<td>Close all open positions using market orders.</td>
+									</tr>
+									<tr>
+										<td><kbd>e=bitmex-testnet c=position q=25% t=market</kbd></td>
+										<td>Close 25% of any open positions using market orders.</td>
+									</tr>
+									<tr>
+										<td><kbd>e=bitmex-testnet s=xbtusd b=buy p=0.50 q=0.25</kbd></td>
+										<td>Open a 0.25 USD order $0.50 above the buy book<br />
+											Example: Top buy is $449.15, order will be placed at $449.65</td>
+									</tr>
+									<tr>
+										<td><kbd>e=bitmex-testnet s=xbtusd b=buy p=0.50 q=0.25 u=currency</kbd></td>
+										<td>Open a 0.25 BTC order, undercutting the buy book by $0.50<br />
+											Example: Top buy is $449.15, order will be placed at $449.65</td>
+									</tr>
+									<tr>
+										<td><kbd>e=bitmex-testnet s=xbtusd b=long l=10 q=100</kbd></td>
+										<td>Open a long with 100 contracts using 10x leverage</td>
+									</tr>
+									<tr>
+										<td><kbd>e=poloniex s=pinkbtc b=sell q=1000</kbd></td>
+										<td>Place a sell for 1000 PINK over the lowest selling price.</td>
+									</tr>
+									<tr>
+										<td><kbd>e=poloniex s=pinkbtc b=buy q=0.025-0.05</kbd></td>
+										<td>Market buy a random amount between 0.025 and 0.05 BTC of PINK.<br/>
+											Example: 0.05 BTC / 0.00000311 = ~16,077 PINK</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</article>
+
+					<article id="change-log" class="hide">
+						<h1 class="page-header">
+							<span class="glyphicon glyphicon-floppy-disk"></span>
+							Change log
+						</h1>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>6.13.1</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>Kraken</strong> Corrected Take Profit (<code>tp</code>) and Stop Loss (<code>sl</code>)</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>6.13.0</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>Binance</strong>
+									<ul>
+										<li>Correct Take Profit (<code>tp</code>) and Stop Loss (<code>sl</code>) orders</li>
+										<li>Implement Hidden / Iceberg (<code>h</code>) advanced order usage</li>
+									</ul>
+								</li>
+								<li class="list-group-item"><strong>BitMEX</strong> and <strong>BitMEX Testnet</strong> Corrected Take Profit (<code>tp</code>), Stop Loss (<code>sl</code>) and Trailing Stop (<code>ts</code>) advanced order types</li>
+								<li class="list-group-item"><strong>Kraken</strong> Changed Take Profit (<code>tp</code>) and Stop Loss (<code>sl</code>) to be relative to the best price</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>6.12.0</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>Kraken</strong>
+									<ul>
+										<li>Implemented the "settle-position" order type (i.e. <code>t=settle</code>)</li>
+										<li>Correctly isolate Command parameters for Closing of Positions (i.e. <code>c=position</code>)</li>
+									</ul>
+								</li>
+								<li class="list-group-item"><strong>BitMEX</strong> and <strong>BitMEX Testnet</strong>
+									<ul>
+										<li>Implement Hidden / Iceberg (<code>h</code>) order type. <span class="text-muted">By <a href="https://gitlab.com/materemias" target="_blank">@materemias</a></span></li>
+										<li>Implement Stop Loss (<code>sl</code>) and Take Profit (<code>tp</code>) order types when closing positions. <span class="text-muted">By <a href="https://gitlab.com/materemias" target="_blank">@materemias</a></span></li>
+									</ul>
+								</li>
+								<li class="list-group-item"><strong>Bitfinex</strong>
+									<ul>
+										<li>Implement Hidden orders (i.e. <code>h=1</code>). <span class="text-muted">By <a href="https://gitlab.com/materemias" target="_blank">@materemias</a></span></li>
+										<li>Implement Stop Loss (<code>sl=1</code>) and Trailing Stop (<code>ts=1</code>) order types when closing positions. <span class="text-muted">By <a href="https://gitlab.com/o0l0o" target="_blank">@o0l0o</a></span></li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>6.11.0</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>Kraken</strong> support added</li>
+								<li class="list-group-item"><strong>GDAX</strong> Correct open order book (<code>b</code>) filter</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>6.10.1</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>BitMEX</strong> and <strong>BitMEX Testnet</strong>
+									<ul>
+										<li>Correct leverage caching to prevent excess API requests</li>
+										<li>Correct market precision resolving when stepping varies from decimal places (e.g. 0.5 vs 0.1)</li>
+									</ul>
+								</li>
+								<li class="list-group-item">Correct Fixed Price (<code>fp</code>) filter when cancelling open orders (i.e. <code>c=order fp=0.123</code>)</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>6.10.0</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item">Implemented Fixed Price (<code>fp</code>) filter when cancelling open orders (i.e. <code>c=order fp=0.123</code>)</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>6.9.4</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>BitMEX</strong> and <strong>BitMEX Testnet</strong> Cache leverage value to prevent excess API requests</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>6.9.3</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>Bitfinex</strong> Update cached additional symbol information</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>6.9.2</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>GDAX</strong> Corrected Symbol (<code>s</code>) processing</li>
+								<li class="list-group-item">Correct storage issue affecting Google Payment permissions</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>6.9.1</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item">Rename variable <code>xhr</code> to remove any <strong>TradingView</strong> impact</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>6.9.0</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>GDAX</strong> support added</li>
+								<li class="list-group-item"><strong>Kucoin</strong> support added</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>6.8.1</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item">General improvements</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>6.8.0</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item">Fixed Price (<code>fp</code>) parameter implemented for literal price syntax</li>
+								<li class="list-group-item">An additional delimiter (<code>|</code>) to allow splitting of concatenated strings (e.g. <code>c=order|c=position|delay=5|b=buy q=1%</code>)</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>6.7.0</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>PayPal</strong> payment method support added</li>
+								<li class="list-group-item"><strong>Binance</strong> Correct reversed balance amounts (i.e. <code>y=equity</code> is no longer the default)</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>6.6.4</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item">Implement the control of Google Payments permissions for Chromium users</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>6.6.3</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>Bitfinex</strong> Correct quantity (<code>q</code>) parameter when closing position</li>
+								<li class="list-group-item"><strong>Binance</strong> Ignore time synchronization insight if permission is not granted</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>6.6.2</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>Binance</strong>
+									<ul>
+										<li>Correct API test credentials button</li>
+										<li>Provide time synchronization insight on background page</li>
+									</ul>
+								</li>
+								<li class="list-group-item"><strong>BTC-e</strong> support removed</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>6.6.1</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>Bitfinex</strong> Corrected quantity calculations (i.e. <code>u=currency</code>)</li>
+								<li class="list-group-item"><strong>BitMEX</strong> and <strong>BitMEX Testnet</strong> Corrected quantity calculations for markets with price < 1</li>
+								<li class="list-group-item"><strong>Binance</strong> Corrected market orders (i.e. <code>t=market</code>)</li>
+								<li class="list-group-item">Delay (<code>delay</code>) command expanded:
+									<ul>
+										<li>Inline (i.e. <code>b=buy delay=5</code>)</li>
+										<li>Range (random) (i.e. <code>delay=5-10</code>)</li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>6.6.0</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>Binance</strong> support added</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>6.5.0</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><code>delay</code> parameter added for delaying multiple commands within the same alert</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>6.4.1</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>Bittrex</strong> Corrected Symbol (<code>s</code>) processing</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>6.4.0</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>OKEX</strong> Spot and Margin trading corrected</li>
+								<li class="list-group-item"><strong>OKCoin</strong> Spot trading corrected</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>6.2.1, 6.2.2</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>Bitfinex</strong> margin balance resolving corrected</li>
+								<li class="list-group-item"><strong>Bitfinex</strong> closing positions corrected</li>
+								<li class="list-group-item"><strong>Strategy Tester Export</strong> corrected</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>6.2.0</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>Bitfinex</strong> support added</li>
+								<li class="list-group-item"><strong>Poloniex</strong> Fill-Or-Kill (<code>t=fok</code>), Immediate-Or-Cancel (<code>t=ioc</code>), and Post Only (<code>t=post</code>) order types implemented</li>
+								<li class="list-group-item"><strong>1Broker</strong> Corrected Close Maximum (<code>cm</code>) parameter when closing positions</li>
+								<li class="list-group-item">General improvements</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>6.1.1 - 6.1.4</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>Bittrex</strong> Allow for various Symbol (<code>s</code>) parameter values (e.g. <code>BTC-PINK</code>, <code>PINKBTC</code>).</li>
+								<li class="list-group-item"><strong>BitMEX</strong> and <strong>BitMEX Testnet</strong> Added support for Post-Only orders (<code>t=post</code>)</li>
+								<li class="list-group-item">Corrected saving coupon descriptions and display of associated messages</li>
+								<li class="list-group-item">General improvements</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>6.1.0</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item">Implemented &quot;Test Credentials&quot; option for exchange API information</li>
+								<li class="list-group-item"><strong>Bittrex</strong> Corrected fee deduction when opening new orders using all available balance (i.e. <code>q=100%</code>).</li>
+								<li class="list-group-item">General improvements</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>6.0.0, 6.0.1</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>Poloniex</strong> Corrected margin trading balance usage</li>
+								<li class="list-group-item"><strong>Bittrex</strong> Corrected market symbol validation</li>
+								<li class="list-group-item"><strong>BitMEXM</strong> and <strong>BitMEX Testnet</strong> Corrected yield (<code>y</code>) implementation</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>5.1.0</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>BitMEX</strong> and <strong>BitMEX Testnet</strong>
+									<ul>
+										<li>Corrected closing of positions (<code>c=position</code>)</li>
+										<li>Market ticker size utilization for price (<code>p</code>) parameter precision resolving</li>
+									</ul>
+								</li>
+								<li class="list-group-item"><strong>Poloniex</strong> Implement yield (<code>y</code>) parameter</li>
+								<li class="list-group-item"><strong>pay.with.pink</strong> Adjusted caching to allowing for subscription changes without reloading Autoview</li>
+								<li class="list-group-item"><strong>OKCoin</strong> Create API error string cache for improved error messages</li>
+								<li class="list-group-item">Removed internal error checking to prevent erroneously preventing order placement</li>
+								<li class="list-group-item">Using the disabled parameter (<code>d</code>) will now output the request parameters</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>5.0.4</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>Bittrex</strong>
+									<ul>
+										<li>Open order filtering corrections</li>
+										<li>Order quantity placement corrections</li>
+									</ul>
+								</li>
+								<li class="list-group-item"><strong>OKCoin / OKEX</strong> open order filtering corrections</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>5.0.3</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>Bittrex</strong> order quantity placement corrections</li>
+								<li class="list-group-item"><strong>Poloniex</strong> order quantity placement corrections</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>5.0.2</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item">Increase awareness and correct issues when Chrome is not logged into an account</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>5.0.0</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>pay.with.pink</strong>
+									<ul>
+										<li><a href="https://getstarted.with.pink" target="_blank">Pinkcoin</a> cryptocurrency is now accepted</li>
+										<li>Coupon Code based referral system implemented to provide Pinkcoin commission payments</li>
+									</ul>
+								</li>
+								<li class="list-group-item"><strong>Bittrex</strong> order placement corrections</li>
+								<li class="list-group-item"><strong>Poloniex</strong> order placement corrections</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>4.1.0</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>Bittrex</strong> support added</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>4.0.1 - 4.0.4</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>BitMEX</strong> and <strong>BitMEX Testnet</strong>
+									<ul>
+										<li>Using cross-margin (e.g. <code>y=equity</code>) corrected</li>
+										<li>Closing of positions corrected</li>
+										<li>Opening orders using contract values corrected</li>
+										<li>Closing positions corrected</li>
+										<li>BitMEX and BitMEX Testnet enabled</li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>4.0.0</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>BTC-e</strong> nonce generation algorithm changed
+									<ul>
+										<li>API Credentials will need to be recreated</li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>3.9.0</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>BitMEX</strong> support added</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>3.6.2, 3.7.1, 3.8.2</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item">General improvements</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>3.8.0, 3.8.1</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>BitMEX Testnet</strong> support added (no subscription required).</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>3.7.0</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>OKCoin</strong> Futures has moved to <strong>OKEX</strong></li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>3.6.1</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>1Broker</strong> Bug fix</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>3.6.0</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>1Broker</strong> API version 1 removal
+									<ul>
+										<li>Version context no longer required when creating credentials</li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>3.5.0</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>BTC-e</strong> added (i.e. Bitcoins, Litecoins, and Namecoins, for Dollars, Euros and Rubles).</li>
+								<li class="list-group-item">General improvements</li>
+								<li class="list-group-item">Bug fixes</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>3.4.1, 3.4.2</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>Poloniex</strong> Margin trading available balances corrected</li>
+								<li class="list-group-item">Bug fixes</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>3.4.0</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>1Broker</strong> Whether or not the trade will be visible to other traders (i.e. <code>shared</code> parameter)</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>3.3.0</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item">Google Analytics integrated for statistical analysis</li>
+								<li class="list-group-item"><strong>Poloniex</strong> Nonce generation corrected</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>3.2.0</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item">Subscriptions updated
+									<ul>
+										<li>$44.99 / year / exchange</li>
+										<li>Early Bird promotions ended</li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>3.1.0</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>1Broker</strong> switched to API V2.</li>
+								<li class="list-group-item">Cancel / Close Maximum (<code>cm</code>) can now be controlled (<code>cmo</code>).</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>3.0.0</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item">Subscriptions
+									<ul>
+										<li><strong>1Broker</strong> will remain free.</li>
+										<li>$4.99 / month / exchange</li>
+										<li>$29.99 / year / exchange Early Bird special (promotion ended November 24rd, 2016)</li>
+									</ul>
+								</li>
+								<li class="list-group-item">Complete overhaul to move to synchronous processing.
+									<ul>
+										<li>Improved accuracy reading/using account data.</li>
+										<li>Corrects nonce issue with <strong>Poloniex</strong>.</li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>2.0.0</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item">Margin trading corrections for <strong>Poloniex</strong>.</li>
+								<li class="list-group-item">Use the book (<code>b</code>) parameter directly to decide either Spot or Margin trading.
+									<ul>
+										<li>Spot trading: buy, sell</li>
+										<li>Margin trading: long, short</li>
+										<li><code>b=bid</code> or <code>b=ask</code> are deprecated
+									</ul>
+								</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>1.0.12</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item">Corrections for Take Profit (<code>tp</code>) and Stop Loss (<code>sl</code>) on <strong>1Broker</strong>.</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>1.0.11</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item">Correction for futures trading on <strong>OKCoin</strong> using BTC (i.e. <code>u=currency</code>) instead of Contracts.</li>
+								<li class="list-group-item">Unit (<code>u</code>) parameter added for controlling OKCoin order units.</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>1.0.10</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item">Correction for margin trading (i.e. <code>t=margin</code>) on <strong>Poloniex</strong>.</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>1.0.9</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item">Limiting the closing of positions (i.e. <code>c=position</code>) has been corrected.</li>
+								<li class="list-group-item">Closing orders (i.e. <code>c=order</code>) can now be controlled (i.e. <code>cm=#</code>).</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>1.0.8</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item">Internal messaging correction.</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>1.0.7</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item">Correct <strong>TradingView</strong> alert processing (front-end).</li>
+								<li class="list-group-item">Closing positions (i.e. <code>c=position</code>) can now be controlled (i.e. <code>cm=#</code>).</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>1.0.6</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item">Correct implementation of multiple accounts per command line (e.g. <code>a=mother,daughter</code>).</li>
+								<li class="list-group-item"><strong>Poloniex</strong> correctly closes all open orders using <code>c=order</code>.</li>
+								<li class="list-group-item"><strong>TradingView</strong> internal <abbr title="Uniform Resource Identifier ">URI</abbr>s adjusted to support <a href="https://new.tradingview.com/" target="_blank">new.tradingview.com</a>.</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>1.0.5</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>Poloniex</strong> &quot;quantity (<code>q</code>) exceeds available balance&quot; has been corrected.</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>1.0.4</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>1Broker</strong> and <strong>OKCoin</strong> account (<code>a</code>) parameter corrected.</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>1.0.3</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item">Multiple accounts per command line (e.g. <code>a=mother,daughter</code>)</li>
+								<li class="list-group-item"><strong>Poloniex</strong> market orders (<code>t=market</code>) implemented</li>
+								<li class="list-group-item">Corrected percentage (%) usage with the quantity (<code>q</code>) parameter.</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>1.0.2</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item">Corrected command line bleeding (parameters were carried into other lines).</li>
+								<li class="list-group-item">Adjustments to the Alert Syntax page.</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>1.0.1</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item">Version (<code>v</code>) parameter added for operating <strong>Autoview</strong> and <strong>Betaview</strong> simultaneously.</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>1.0.0</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>Price (<code>p</code>) will no longer be flipped for ask/sell/short orders or positions.</strong>
+									<ul>
+										<li>Positive (+) or negative (-) price adjustment is as follows:</li>
+										<li><strong>Bid / Buy / Long:</strong> Undercut (-), overcut (+)</li>
+										<li><strong>Ask / Sell / Short:</strong> Undercut (+), overcut (-)</li>
+									</ul>
+								</li>
+								<li class="list-group-item"><strong>Poloniex</strong> added (100+ symbols; including <code>LTCBTC</code>, <code>PINKBTC</code>, <code>BTCUSDT</code>)</li>
+								<li class="list-group-item"><strong>OKCoin</strong> spot trading added (<code>BTCUSD</code>, <code>LTCUSD</code>)</li>
+								<li class="list-group-item"><strong>1Broker</strong> Take Profit (<code>tp</code>) and Stop Loss (<code>sl</code>) are now decimals or percentages (%); <abbr title="Percentage in point">PIP</abbr>s have been removed.</li>
+								<li class="list-group-item">Multiple API credentials per exchange via the account (<code>a</code>) parameter.</li>
+								<li class="list-group-item">Percentages (%) fixed up and normalized with leverage (where applicable).</li>
+								<li class="list-group-item">Version number standardized to Semantic Versioning 2.0.0 <u>http://semver.org/</u></li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>0.2.800</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><strong>OKCoin</strong> account balances and market data reliability increased</li>
+								<li class="list-group-item">Change log added to Options page</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>0.2.737</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item">Offline mode; Alerts fired while <strong>TradingView</strong> or Chrome itself is closed will be processed.
+									<ol>
+										<li><span class="glyphicon glyphicon-menu-hamburger"></span> &gt; Settings</li>
+										<li>Show advanced settings... (very bottom)</li>
+										<li>System &gt; Continue running background apps when Google Chrome is closed</li>
+									</ol>
+								</li>
+								<li class="list-group-item"><u>Export</u> fixed to work with multiple strategies on a single chart</li>
+								<li class="list-group-item"><u>Export</u> $ and % symbols removed, percents are now decimals (e.g. 26% is now 0.26)</li>
+								<li class="list-group-item"><strong>Autoview</strong> will refresh <strong>TradingView</strong> upon being updated (and installed) to ensure connectivity</li>
+								<li class="list-group-item">Failsafe to ensure <strong>TradingView</strong> is connected to <strong>Autoview</strong> (every minute double-checking)</li>
+								<li class="list-group-item">Security patch (fixing a potential future issue)</li>
+								<li class="list-group-item">Additional output added to aid in <strong>Autoview</strong> insight (i.e. debugging)</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>0.2.698</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item"><u>Export</u> (under <u>Strategy Tester</u>, next to <u>List of trades</u>) will now output Inputs and Properties settings as well as the full list of trades.</li>
+							</ul>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>0.2.688</strong></div>
+							<ul class="list-group">
+								<li class="list-group-item">Strategy Tester Export feature (beside <u>List of Trades</u> is an <u>Export</u> button)</li>
+								<li class="list-group-item"><strong>OKCoin</strong> account balance retrieval switched to 60s polling instead of WebSocket polling</li>
+								<li class="list-group-item">Security patch (hardens internal messages)</li>
+								<li class="list-group-item">A few bug fixes</li>
+							</ul>
+						</div>
+					</article>
+
+					<article id="help" class="hide">
+						<h1 class="page-header">
+							<span class="glyphicon glyphicon-info-sign"></span>
+							Help
+						</h1>
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>Wiki</strong> Frequently Asked Questions</div>
+							<div class="panel-body">
+								<p>
+									Within the <a href="https://use.autoview.with.pink" target="_blank">Autoview wiki</a> you will find our frequently asked questions,
+									pine script tutorials and snippets, how to track down errors, and more.
+								</p>
+							</div>
+						</div>
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>Community</strong> Join us all in Discord</div>
+							<div class="panel-body">
+							<p>
+								Autoview has its own Discord Server: <a href="https://discordapp.com/invite/BFz8VPn" target="_blank">https://discordapp.com/invite/BFz8VPn</a><br />
+								Discuss trading strategies, Pine scripting, feature requests, bug reports; everything Autoview.
+							</p>
+							</div>
+						</div>
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>Website</strong> Free newsletter!</div>
+							<div class="panel-body">
+								<p>
+									For the Alert Syntax reference guide while you are on the go,
+									or informational videos on possible TradingView chart/alert configurations,
+									or subscribing to our newsletter for upgrades on the road to success,
+									please visit our website: <a href="https://autoview.with.pink" target="_blank">autoview.with.pink</a>
+								</p>
+							</div>
+						</div>
+					</article>
+
+					<article id="settings" class="hide">
+						<h1 class="page-header">
+							<span class="glyphicon glyphicon-cog"></span>
+							Permissions
+						</h1>
+
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>Exchanges</strong></div>
+							<ul id="settings-permissions" class="list-group">
+								<li class="list-group-item" data-exchange="1BROKER">
+									<div class="pull-right">
+										<button name="grant" class="btn btn-success hide" data-action="settings_permission_request" data-exchange="1BROKER">
+											<span class="glyphicon glyphicon-ok"></span> Grant
+										</button>
+										<button name="revoke" class="btn btn-danger hide" data-action="settings_permission_remove" data-exchange="1BROKER">
+											<span class="glyphicon glyphicon-lock"></span> Revoke
+										</button>
+									</div>
+									<a href="https://1broker.com/?r=3228" target="_blank">
+										<strong>1Broker</strong>
+										<span class="glyphicon glyphicon-new-window glyphicon-sm"></span>
+									</a><br />
+									Bitcoin Forex and CFD Trading. Trade major currency pairs, indices, stocks and commodities with your Bitcoins feeless and with customizable leverages.
+								</li>
+								<li class="list-group-item" data-exchange="BINANCE">
+									<div class="pull-right">
+										<button name="subscription-start" title="Binance - Yearly" class="btn btn-success hide" data-action="settings_subscription_request" data-exchange="BINANCE" data-subscription="biuevdnwfyargmcpklhqsxojtz">
+											<span class="glyphicon glyphicon-shopping-cart"></span> $44.99/year
+										</button>
+										<button name="subscription-start" title="Binance" class="btn btn-success hide" data-action="settings_subscription_request" data-exchange="BINANCE" data-subscription="biaksgztrmlncqovehwydpfujx">
+											<span class="glyphicon glyphicon-shopping-cart"></span> $4.99/month
+										</button>
+										<button name="subscription-stop" class="btn btn-success hide" disabled="disabled">
+											<span class="glyphicon glyphicon-signal"></span> Active Subscription
+										</button>
+										<button name="grant" class="btn btn-success hide" data-action="settings_permission_request" data-exchange="BINANCE">
+											<span class="glyphicon glyphicon-ok"></span> Grant
+										</button>
+										<button name="revoke" class="btn btn-danger hide" data-action="settings_permission_remove" data-exchange="BINANCE">
+											<span class="glyphicon glyphicon-lock"></span> Revoke
+										</button>
+									</div>
+									<a href="https://www.binance.com/?ref=13612693" target="_blank">
+										<strong>Binance (beta)</strong>
+										<span class="glyphicon glyphicon-new-window glyphicon-sm"></span>
+									</a><br />
+									Exchange the World
+								</li>
+								<li class="list-group-item" data-exchange="BITFINEX">
+									<div class="pull-right">
+										<button name="subscription-start" title="Bitfinex - Yearly" class="btn btn-success hide" data-action="settings_subscription_request" data-exchange="BITFINEX" data-subscription="ifcxdtjswkhzoumraeqbngyvpl">
+											<span class="glyphicon glyphicon-shopping-cart"></span> $44.99/year
+										</button>
+										<button name="subscription-start" title="Bitfinex" class="btn btn-success hide" data-action="settings_subscription_request" data-exchange="BITFINEX" data-subscription="iftdzvqcnoarjswmupxhglybek">
+											<span class="glyphicon glyphicon-shopping-cart"></span> $4.99/month
+										</button>
+										<button name="subscription-stop" class="btn btn-success hide" disabled="disabled">
+											<span class="glyphicon glyphicon-signal"></span> Active Subscription
+										</button>
+										<button name="grant" class="btn btn-success hide" data-action="settings_permission_request" data-exchange="BITFINEX">
+											<span class="glyphicon glyphicon-ok"></span> Grant
+										</button>
+										<button name="revoke" class="btn btn-danger hide" data-action="settings_permission_remove" data-exchange="BITFINEX">
+											<span class="glyphicon glyphicon-lock"></span> Revoke
+										</button>
+									</div>
+									<a href="https://www.bitfinex.com/" target="_blank">
+										<strong>Bitfinex (beta)</strong>
+										<span class="glyphicon glyphicon-new-window glyphicon-sm"></span>
+									</a><br />
+									The largest and most advanced cryptocurrencies exchange
+								</li>
+								<li class="list-group-item" data-exchange="BITMEX">
+									<div class="pull-right">
+										<button name="subscription-start" title="BitMEX - Yearly" class="btn btn-success hide" data-action="settings_subscription_request" data-exchange="BITMEX" data-subscription="dnsfjeqaixybukltmcorhvzpwg">
+											<span class="glyphicon glyphicon-shopping-cart"></span> $44.99/year
+										</button>
+										<button name="subscription-start" title="BitMEX" class="btn btn-success hide" data-action="settings_subscription_request" data-exchange="BITMEX" data-subscription="dvytfuxeilgabhpcqknmjosrzw">
+											<span class="glyphicon glyphicon-shopping-cart"></span> $4.99/month
+										</button>
+										<button name="subscription-stop" class="btn btn-success hide" disabled="disabled">
+											<span class="glyphicon glyphicon-signal"></span> Active Subscription
+										</button>
+										<button name="grant" class="btn btn-success hide" data-action="settings_permission_request" data-exchange="BITMEX">
+											<span class="glyphicon glyphicon-ok"></span> Grant
+										</button>
+										<button name="revoke" class="btn btn-danger hide" data-action="settings_permission_remove" data-exchange="BITMEX">
+											<span class="glyphicon glyphicon-lock"></span> Revoke
+										</button>
+									</div>
+									<a href="https://www.bitmex.com/register/vrkVRt" target="_blank">
+										<strong>BitMEX</strong>
+										<span class="glyphicon glyphicon-new-window glyphicon-sm"></span>
+									</a><br />
+									Trade Bitcoin and other cryptocurrencies with up to 100x leverage. Fast execution, low fees, powerful features, and responsive trading: available only on BitMEX.
+								</li>
+								<li class="list-group-item" data-exchange="BITMEXTESTNET">
+									<div class="pull-right">
+										<button name="grant" class="btn btn-success hide" data-action="settings_permission_request" data-exchange="BITMEXTESTNET">
+											<span class="glyphicon glyphicon-ok"></span> Grant
+										</button>
+										<button name="revoke" class="btn btn-danger hide" data-action="settings_permission_remove" data-exchange="BITMEXTESTNET">
+											<span class="glyphicon glyphicon-lock"></span> Revoke
+										</button>
+									</div>
+									<a href="https://testnet.bitmex.com/register/6uEWpO" target="_blank">
+										<strong>BitMEX Testnet</strong>
+										<span class="glyphicon glyphicon-new-window glyphicon-sm"></span>
+									</a><br />
+									Trade Bitcoin and other cryptocurrencies with up to 100x leverage. Fast execution, low fees, powerful features, and responsive trading: available only on BitMEX.
+								</li>
+								<li class="list-group-item" data-exchange="BITTREX">
+									<div class="pull-right">
+										<button name="subscription-start" title="Bittrex - Yearly" class="btn btn-success hide" data-action="settings_subscription_request" data-exchange="BITTREX" data-subscription="tnjcfgeosirmxqwzhulkybvapd">
+											<span class="glyphicon glyphicon-shopping-cart"></span> $44.99/year
+										</button>
+										<button name="subscription-start" title="Bittrex" class="btn btn-success hide" data-action="settings_subscription_request" data-exchange="BITTREX" data-subscription="tfnmhjoyxcvsugpezalrwiqbdk">
+											<span class="glyphicon glyphicon-shopping-cart"></span> $4.99/month
+										</button>
+										<button name="subscription-stop" class="btn btn-success hide" disabled="disabled">
+											<span class="glyphicon glyphicon-signal"></span> Active Subscription
+										</button>
+										<button name="grant" class="btn btn-success hide" data-action="settings_permission_request" data-exchange="BITTREX">
+											<span class="glyphicon glyphicon-ok"></span> Grant
+										</button>
+										<button name="revoke" class="btn btn-danger hide" data-action="settings_permission_remove" data-exchange="BITTREX">
+											<span class="glyphicon glyphicon-lock"></span> Revoke
+										</button>
+									</div>
+									<a href="https://www.bittrex.com/" target="_blank">
+										<strong>Bittrex</strong>
+										<span class="glyphicon glyphicon-new-window glyphicon-sm"></span>
+									</a><br />
+									Bittrex is a US based crypto-currency exchange designed with security and scalability in mind.
+								</li>
+								<li class="list-group-item" data-exchange="GDAX">
+									<div class="pull-right">
+										<button name="subscription-start" title="GDAX - Yearly" class="btn btn-success hide" data-action="settings_subscription_request" data-exchange="GDAX" data-subscription="gdaxwlupnqjmhectvizykbrsof">
+											<span class="glyphicon glyphicon-shopping-cart"></span> $44.99/year
+										</button>
+										<button name="subscription-start" title="GDAX" class="btn btn-success hide" data-action="settings_subscription_request" data-exchange="GDAX" data-subscription="gdaxeukowcyhmjrtvblzipsfqn">
+											<span class="glyphicon glyphicon-shopping-cart"></span> $4.99/month
+										</button>
+										<button name="subscription-stop" class="btn btn-success hide" disabled="disabled">
+											<span class="glyphicon glyphicon-signal"></span> Active Subscription
+										</button>
+										<button name="grant" class="btn btn-success hide" data-action="settings_permission_request" data-exchange="GDAX">
+											<span class="glyphicon glyphicon-ok"></span> Grant
+										</button>
+										<button name="revoke" class="btn btn-danger hide" data-action="settings_permission_remove" data-exchange="GDAX">
+											<span class="glyphicon glyphicon-lock"></span> Revoke
+										</button>
+									</div>
+									<a href="https://www.gdax.com" target="_blank">
+										<strong>GDAX (beta)</strong>
+										<span class="glyphicon glyphicon-new-window glyphicon-sm"></span>
+									</a><br />
+									US based digital asset exchange with trading FIX API and REST API.
+								</li>
+								<li class="list-group-item" data-exchange="KRAKEN">
+									<div class="pull-right">
+										<button name="subscription-start" title="Kraken - Yearly" class="btn btn-success hide" data-action="settings_subscription_request" data-exchange="KRAKEN" data-subscription="krknpwcfbjuqxihlomgsatyevdz">
+											<span class="glyphicon glyphicon-shopping-cart"></span> $44.99/year
+										</button>
+										<button name="subscription-start" title="Kraken" class="btn btn-success hide" data-action="settings_subscription_request" data-exchange="KRAKEN" data-subscription="qxtoysapiwkjuegnrbmfchzdlv">
+											<span class="glyphicon glyphicon-shopping-cart"></span> $4.99/month
+										</button>
+										<button name="subscription-stop" class="btn btn-success hide" disabled="disabled">
+											<span class="glyphicon glyphicon-signal"></span> Active Subscription
+										</button>
+										<button name="grant" class="btn btn-success hide" data-action="settings_permission_request" data-exchange="KRAKEN">
+											<span class="glyphicon glyphicon-ok"></span> Grant
+										</button>
+										<button name="revoke" class="btn btn-danger hide" data-action="settings_permission_remove" data-exchange="KRAKEN">
+											<span class="glyphicon glyphicon-lock"></span> Revoke
+										</button>
+									</div>
+									<a href="https://www.kraken.com/" target="_blank">
+										<strong>Kraken (beta)</strong>
+										<span class="glyphicon glyphicon-new-window glyphicon-sm"></span>
+									</a><br />
+									Buy, sell and margin trade Bitcoin (BTC) and Etherum (ETH) in exchange with EUR, USD, CAD, GBP, and JPY. Leveraged trading on US based Bitcoin and Ethereum exchange.
+								</li>
+								<li class="list-group-item" data-exchange="KUCOIN">
+									<div class="pull-right">
+										<button name="subscription-start" title="Kucoin - Yearly" class="btn btn-success hide" data-action="settings_subscription_request" data-exchange="KUCOIN" data-subscription="kuctgwdzjobpnlhvisqmxearfy">
+											<span class="glyphicon glyphicon-shopping-cart"></span> $44.99/year
+										</button>
+										<button name="subscription-start" title="Kucoin" class="btn btn-success hide" data-action="settings_subscription_request" data-exchange="KUCOIN" data-subscription="kucgtsrevdlfwzijbyhnaqmpox">
+											<span class="glyphicon glyphicon-shopping-cart"></span> $4.99/month
+										</button>
+										<button name="subscription-stop" class="btn btn-success hide" disabled="disabled">
+											<span class="glyphicon glyphicon-signal"></span> Active Subscription
+										</button>
+										<button name="grant" class="btn btn-success hide" data-action="settings_permission_request" data-exchange="KUCOIN">
+											<span class="glyphicon glyphicon-ok"></span> Grant
+										</button>
+										<button name="revoke" class="btn btn-danger hide" data-action="settings_permission_remove" data-exchange="KUCOIN">
+											<span class="glyphicon glyphicon-lock"></span> Revoke
+										</button>
+									</div>
+									<a href="https://www.kucoin.com/" target="_blank">
+										<strong>Kucoin (beta)</strong>
+										<span class="glyphicon glyphicon-new-window glyphicon-sm"></span>
+									</a><br />
+									The most advanced cryptocurrency exchange to buy and sell Bitcoin, Litecoin, Ethereum, etc.
+								</li>
+								<li class="list-group-item" data-exchange="OKCOIN-USD">
+									<div class="pull-right">
+										<button name="subscription-start" title="OKCoin (USD) - Yearly" class="btn btn-success hide" data-action="settings_subscription_request" data-exchange="OKCOIN-USD" data-subscription="ejyoqtnxkipdszmglchuwrbafv">
+											<span class="glyphicon glyphicon-shopping-cart"></span> $44.99/year
+										</button>
+										<button name="subscription-start" title="OKCoin (USD)" class="btn btn-success hide" data-action="settings_subscription_request" data-exchange="OKCOIN-USD" data-subscription="ulxirqdphtmwcanefojvszkybg">
+											<span class="glyphicon glyphicon-shopping-cart"></span> $4.99/month
+										</button>
+										<button name="subscription-stop" class="btn btn-success hide" disabled="disabled">
+											<span class="glyphicon glyphicon-signal"></span> Active Subscription
+										</button>
+										<button name="grant" class="btn btn-success hide" data-action="settings_permission_request" data-exchange="OKCOIN-USD">
+											<span class="glyphicon glyphicon-ok"></span> Grant
+										</button>
+										<button name="revoke" class="btn btn-danger hide" data-action="settings_permission_remove" data-exchange="OKCOIN-USD">
+											<span class="glyphicon glyphicon-lock"></span> Revoke
+										</button>
+									</div>
+									<a href="https://www.okcoin.com/?invid=2016110" target="_blank">
+										<strong>OKCoin (USD) (beta)</strong>
+										<span class="glyphicon glyphicon-new-window glyphicon-sm"></span>
+									</a><br />
+									The leading bitcoin exchange. Secured with bank-level SSL encryption and cold storage. Distributed servers for high-speed bitcoin trading based on real-time data. P2P lending market, bitcoin futures and more.
+								</li>
+								<li class="list-group-item" data-exchange="OKEX">
+									<div class="pull-right">
+										<button name="subscription-start" title="OKEX - Yearly" class="btn btn-success hide" data-action="settings_subscription_request" data-exchange="OKEX" data-subscription="mjxvfuicaszpygdlwqetbrnkho">
+											<span class="glyphicon glyphicon-shopping-cart"></span> $44.99/year
+										</button>
+										<button name="subscription-start" title="OKEX" class="btn btn-success hide" data-action="settings_subscription_request" data-exchange="OKEX" data-subscription="meuowjznhxlpgcrvftdikaysqb">
+											<span class="glyphicon glyphicon-shopping-cart"></span> $4.99/month
+										</button>
+										<button name="subscription-stop" class="btn btn-success hide" disabled="disabled">
+											<span class="glyphicon glyphicon-signal"></span> Active Subscription
+										</button>
+										<button name="grant" class="btn btn-success hide" data-action="settings_permission_request" data-exchange="OKEX">
+											<span class="glyphicon glyphicon-ok"></span> Grant
+										</button>
+										<button name="revoke" class="btn btn-danger hide" data-action="settings_permission_remove" data-exchange="OKEX">
+											<span class="glyphicon glyphicon-lock"></span> Revoke
+										</button>
+									</div>
+									<a href="https://www.okex.com/" target="_blank">
+										<strong>OKEX (beta)</strong>
+										<span class="glyphicon glyphicon-new-window glyphicon-sm"></span>
+									</a><br />
+									OKEX is the leading global bitcoin/cryptocurrency exchange, founded by OKEX.com. Secured with bank-level SSL encryption and cold storage. High-speed bitcoin/cryptocurrency trading based on real-time data. OKEX aims to provide top level cryptocurrency trading services for bitcoin futures, litecoin futures, digital asset spot and more.
+								</li>
+								<li class="list-group-item" data-exchange="POLONIEX">
+									<div class="pull-right">
+										<button name="subscription-start" title="Poloniex - Yearly" class="btn btn-success hide" data-action="settings_subscription_request" data-exchange="POLONIEX" data-subscription="ibyhtgdsuoxrfqjcpakvwmnzel">
+											<span class="glyphicon glyphicon-shopping-cart"></span> $44.99/year
+										</button>
+										<button name="subscription-start" title="Poloniex" class="btn btn-success hide" data-action="settings_subscription_request" data-exchange="POLONIEX" data-subscription="jdbctnilemusxowhazvfrkqgyp">
+											<span class="glyphicon glyphicon-shopping-cart"></span> $4.99/month
+										</button>
+										<button name="subscription-stop" class="btn btn-success hide" disabled="disabled">
+											<span class="glyphicon glyphicon-signal"></span> Active Subscription
+										</button>
+										<button name="grant" class="btn btn-success hide" data-action="settings_permission_request" data-exchange="POLONIEX">
+											<span class="glyphicon glyphicon-ok"></span> Grant
+										</button>
+										<button name="revoke" class="btn btn-danger hide" data-action="settings_permission_remove" data-exchange="POLONIEX">
+											<span class="glyphicon glyphicon-lock"></span> Revoke
+										</button>
+									</div>
+									<a href="https://poloniex.com/" target="_blank">
+										<strong>Poloniex</strong>
+										<span class="glyphicon glyphicon-new-window glyphicon-sm"></span>
+									</a><br />
+									A US exchange trading in numerous virtual currencies, including Bitcoin, Ethereum, and Pinkcoin.
+								</li>
+							</ul>
+						</div>
+						<div class="panel panel-default">
+							<div class="panel-heading"><strong>Payment Methods</strong></div>
+							<ul id="settings-permissions-methods" class="list-group">
+								<li class="list-group-item" data-permission="google_payments">
+									<div class="pull-right">
+										<button name="grant" class="btn btn-success hide" data-action="settings_permission_request_google">
+											<span class="glyphicon glyphicon-ok"></span> Grant
+										</button>
+										<button name="revoke" class="btn btn-danger hide" data-action="settings_permission_remove_google">
+											<span class="glyphicon glyphicon-lock"></span> Revoke
+										</button>
+									</div>
+									<a href="https://payments.google.com/" target="_blank">
+										<strong>Google Payments</strong>
+										<span class="glyphicon glyphicon-new-window glyphicon-sm"></span>
+									</a><br />
+									The fast, easy, and free way to send money to friends and family.
+								</li>
+							</ul>
+						</div>
+
+						<table class="table table-striped">
+							<colgroup>
+								<col style="width: 15%" />
+								<col style="width: 10%" />
+								<col style="width: 10%" />
+								<col style="width: 15%" />
+								<col style="width: 50%" />
+							</colgroup>
+							<thead>
+								<tr>
+									<th>Subscription</th>
+									<th>Rate</th>
+									<th>Free Trial</th>
+									<th>Duration</th>
+									<th>Description</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th>Yearly</th>
+									<td>$44.99 / year<br />
+										<small class="text-muted">($3.75 / month)</small></td>
+									<td>7 days</td>
+									<td></td>
+									<td>Spending a little extra upfront will save you 25% off the regular monthly rate.</td>
+								</tr>
+								<tr>
+									<th>Monthly</th>
+									<td>$4.99 / month<br />
+										<small class="text-muted">($59.88 / year)</small></td>
+									<td>7 days</td>
+									<td></td>
+									<td>No obligation to continue trading if you get bored; cancel anytime. Although, paying monthly may dip quicker into your profits.</td>
+								</tr>
+								<tr class="text-muted">
+									<th>Early Bird</th>
+									<td>$29.99 / year<br />
+										<small class="text-muted">($2.49 / month)</small></td>
+									<td>Up to 30 days</td>
+									<td>November 1st - 23rd, 2016</td>
+									<td>These specials offer a 50% off rate compared to the regular monthly rate. For a limited time. All free trials end on November 30th, 2016.</td>
+								</tr>
+							</tbody>
+						</table>
+					</article>
+
+					<article id="coupons" class="hide">
+						<h1 class="page-header">
+							<span class="glyphicon glyphicon-qrcode"></span>
+							Coupon Codes
+						</h1>
+
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<strong>1. Pinkcoin Address</strong>
+							</div>
+							<div class="panel-body">
+								<p>
+									Referral bonuses are delivered in Pinkcoin which is sent to the address you provide.
+									A Pinkcoin address can be obtained in a number of ways:
+								</p>
+								<hr>
+								<div class="text-center col-sm-4">
+									<p>
+										<strong>Running your own wallet</strong><br>
+										<small class="text-muted">(Windows, Mac, Linux)</small>
+									</p>
+									<a href="https://getstarted.with.pink/"  target="_blank" class="btn btn-default">Get started with PINK <span class="glyphicon glyphicon-download-alt"></span></a>
+								</div>
+								<div class="text-center col-sm-4">
+									<p>
+										Coins so precious they are always with you<br>
+										<small class="text-muted">Mobile (Android, iOS)</small>
+									</p>
+									<a href="https://coinomi.com/"  target="_blank" class="btn btn-default">Visit coinomi.com <span class="glyphicon glyphicon-open"></span></a>
+								</div>
+								<div class="text-center col-sm-4">
+									<p>
+										Our friendly Twitter robot <a href="https://twitter.com/pinkcointips" target="_blank">@PinkcoinTips</a><br>
+										<small class="text-muted">Twitter (Third-party)</small>
+									</p>
+									<a href="https://twitter.com/intent/tweet?text=May%20I%20have%20a%20@pinkcointips%20address%20for%20%20&url=chrome-extension:%2F%2Fokdhadoplaoehmeldlpakhpekjcpljmb%2Foptions.html&hashtags=promo,codes&via=AutoviewExt" target="_blank" class="btn btn-default">Tweet to Generate Address <span class="glyphicon glyphicon-new-window"></span></a>
+								</div>
+							</div>
+						</div>
+
+						<div id="referral-destination" class="panel panel-default">
+							<div class="panel-heading">
+								<strong>2. Referral Comission Destination</strong>
+							</div>
+							<form method="post" class="form-horizontal form-striped">
+								<div class="panel-body">
+									<div class="form-group">
+										<label for="address-pinkcoin" class="control-label col-xs-3">Pinkcoin Address</label>
+										<div class="col-sm-9 col-lg-7">
+											<div class="input-group">
+												<input type="text" id="address-pinkcoin" name="address[pinkcoin]" value="" autocomplete="off" placeholder="Pinkcoin Address" class="form-control">
+												<span class="input-group-btn">
+													<button class="btn btn-success" data-action="account_address_update">
+														<span class="glyphicon glyphicon-save"></span> Save
+													</button>
+												</span>
+											</div>
+											<p class="help-block">
+												<strong>10% referral commission</strong> for each subscription purchase (paid in Pinkcoin)
+											</p>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+						<div id="coupon-assigned" class="panel panel-default">
+							<div class="panel-heading">
+								<strong>3. Your Coupons</strong>
+							</div>
+							<div class="panel-body">
+								<form method="post" class="form-horizontal form-striped">
+									<div id="coupon-generation" class="form-group">
+										<div class="col-xs-6">
+											<p>
+												Share Coupon Codes with others to give them a <strong>10% discount</strong> on any subscription.<br>
+												<small class="text-muted">Entered prior to continuing to payment invoice.</small><br>
+												<small class="text-muted">Not acceptable with purchases made using Google Payments.</small>
+											</p>
+										</div>
+										<div class="col-xs-6">
+											<button name="coupon-generate" class="btn btn-primary" data-action="coupons_generate">
+												<span class="glyphicon glyphicon-plus"></span> Generate Coupon
+											</button>
+										</div>
+									</div>
+									<template rel="coupon">
+										<div class="form-group">
+											<div class="col-sm-2">
+												<p class="form-control-static"><span rel="coupon_code">{coupon.code}</span></p>
+											</div>
+											<div class="col-sm-4">
+												<input type="text" id="coupon-{coupon.id}" name="coupon[description]" value="{coupon.description}" maxlength="64" placeholder="Description" class="form-control" />
+											</div>
+											<div class="col-sm-6">
+												<button type="button" class="btn btn-success" data-action="coupons_update" data-coupon="{coupon.id}">
+													<span class="glyphicon glyphicon-save"></span> Save
+												</button>
+												<button type="button" class="btn btn-warning" data-action="coupons_archive" data-coupon="{coupon.id}">
+													<span class="glyphicon glyphicon-eye-close"></span> Archive
+												</button>
+											</div>
+										</div>
+									</template>
+								</form>
+							</div>
+						</div>
+					</article>
+
+					<template id="alert-permissions-missing">
+						<div class="alert alert-danger alert-dismissible">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							Connecting {exchange.name} is disabled until permission is granted.
+							Please visit the <a href="#" data-page="settings">Permissions</a> tab to the left.
+						</div>
+					</template>
+					<template id="alert-subscription-missing">
+						<div class="alert alert-danger alert-dismissible">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							Connecting {exchange.name} is disabled until an active subscription is present.
+							Please visit the <a href="#" data-page="settings">Permissions</a> tab to the left.
+						</div>
+					</template>
+					<template id="alert-danger">
+						<div class="alert alert-danger alert-dismissible">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							{message}
+						</div>
+					</template>
+					<template id="alert-success">
+						<div class="alert alert-success alert-dismissible">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							{message}
+						</div>
+					</template>
+
+					<template id="exchange-page">
+						<article id="exchange-{exchange.id}" class="exchange-page hide">
+							<h1 class="page-header">
+								<span class="pull-right">
+									<button type="button" class="btn btn-primary hide" data-action="action_access_create" data-exchange="{exchange.alias}">
+										<span class="glyphicon glyphicon-plus"></span> Add Account
+									</button>
+									&nbsp;
+									<button type="button" class="btn btn-success hide" data-action="action_access_save" data-exchange="{exchange.alias}">
+										<span class="glyphicon glyphicon-save"></span> Save Accounts
+									</button>
+								</span>
+								<span class="glyphicon glyphicon-globe"></span>
+								{exchange.name}
+							</h1>
+							<template rel="exchange-access">
+								<form method="post" class="form-horizontal">
+									<div class="panel panel-default">
+										<template rel="exchange-access-account">
+											<div class="panel-heading">
+												<div class="row">
+													<div class="col-xs-9">
+														<label for="exchange-{exchange.id}-account-{access.#}" class="control-label col-xs-3">Account:</label>
+														<div class="col-xs-6">
+															<input type="text" id="exchange-{exchange.id}-account-{access.#}" name="account" value="{access.account}" class="form-control">
+															<small class="help-block">When using multiple accounts on a single exchange, assign a unique name to a set of credentials for reference in commands (e.g. <code>a=piggybank</code>). Default: *</small>
+														</div>
+													</div>
+													<div class="col-xs-3">
+														<button type="button" class="btn btn-danger" data-account="{access.account}" data-action="action_access_remove" data-exchange="{exchange.alias}">
+															<span class="glyphicon glyphicon-trash"></span> Delete
+														</button>
+													</div>
+												</div>
+											</div>
+										</template>
+										<div class="panel-body">
+											<div class="row">
+												<div class="col-xs-9">
+													<template rel="exchange-access-field">
+														<div class="form-group">
+															<label for="exchange-{exchange.id}-{field.key}-{access.#}" class="control-label col-xs-3">{field.label}:</label>
+															<div class="col-xs-9">
+																<input type="password" id="exchange-{exchange.id}-{field.key}-{access.#}" name="{field.key}" value="{field.value}" class="form-control">
+																<small class="help-block">{field.message}</small>
+															</div>
+														</div>
+													</template>
+												</div>
+												<div class="col-xs-3">
+													<button type="button" name="test" class="btn btn-link" data-action="action_access_test" data-exchange="{exchange.alias}">
+														<span class="glyphicon glyphicon-list-alt"></span> Test Credentials
+													</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+							</template>
+						</article>
+					</template>
+				</div>
+			</div>
+		</div>
+
+		<template id="exchange-subscription">
+			<div id="subscription-{product.id}" class="modal" tabindex="-1" role="dialog">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<form class="form-horizontal">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								<h4 class="modal-title">Subscription: {product.name}</h4>
+							</div>
+							<div class="modal-body">
+								<div class="form-group">
+									<label class="col-xs-4 control-label">Payment Method</label>
+									<div class="col-xs-8">
+										<!--<div class="radio">
+											<label>
+												<input type="radio" name="gateway" value="pwp" data-major_currency="XBT" data-minor_currency="CAD" data-sku="{product.sku}">
+												Bitcoin
+											</label>
+										</div>-->
+										<div class="radio">
+											<label>
+												<input type="radio" name="gateway" value="google" data-sku="{product.sku}">
+												Google Payments<br>
+												<small class="text-muted">Coupon discounts will not be honoured.</small>
+											</label>
+										</div>
+										<div class="radio">
+											<label>
+												<input type="radio" name="gateway" value="paypal" data-major_currency="CAD" data-minor_currency="CAD" data-sku="{product.sku}">
+												PayPal
+											</label>
+										</div>
+										<div class="radio">
+											<label>
+												<input type="radio" name="gateway" value="pwp" data-gateway="Poloniex" data-major_currency="XPK" data-minor_currency="CAD" data-sku="{product.sku}">
+												Pinkcoin
+											</label>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="subscription_coupon" class="col-xs-4 control-label">Coupon Code</label>
+									<div class="col-xs-8">
+										<input type="text" id="subscription_coupon" name="coupon" placeholder="Coupon Code" class="form-control">
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button data-action="settings_subscription_cancel" class="btn btn-danger pull-left">
+									<span class="glyphicon glyphicon-remove"></span> Cancel
+								</button>
+								<button data-action="settings_subscription_create" class="btn btn-success pull-right">
+									<span class="glyphicon glyphicon-shopping-cart"></span> Continue
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</template>
+	</body>
+</html>

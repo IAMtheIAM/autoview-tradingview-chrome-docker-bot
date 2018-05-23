@@ -1,0 +1,25 @@
+version: "3"
+services:
+
+  virtual-display:
+    build: "." # rebuilds the image upon running if needed.
+    image: "autoviewbot:latest"
+    working_dir: /home/node/app
+    # This command runs the NodeJS server using ts-node
+    command: >
+        sh -c "
+            echo Starting Virtual Display Server... &&
+            ./launch-virtual-display.sh
+        "
+    ports:
+      - "3903:3903" # HOST:CONTAINER - NOTE THIS PORT MUST MATCH THE -rfbport #### SET IN ./launch-virtual-display.sh
+    environment:
+      - VNC_SERVER_PASSWORD=yourpass # this is your VNC password to connect
+        # On host, run `timedatectl set-timezone UTC` to set the Timezone , change UTC with your actual timezone
+
+    restart: always
+    user: node
+    privileged: true
+    volumes: # use local disk data instead of image data. Useful for localhost development mode
+      - ./:/home/node/app/
+      - /etc/localtime:/etc/localtime:ro # this syncs the Host server time into the Docker Container
