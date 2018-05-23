@@ -12,7 +12,7 @@ While I could have used a Windows VPS and set it up easily through remote deskto
 
 To use the pre-compiled Docker Image, 
 
-1) Run `docker pull iamtheiam/autoview-bot` 
+1) Run `npm install && docker pull iamtheiam/autoview-bot` 
 2) Deploy the image to your server.
 3) Follow the steps below.
 
@@ -20,7 +20,7 @@ To build the image from source, clone this repo and then follow these steps:
 
 `git clone https://github.com/IAMtheIAM/autoview-tradingview-chrome-docker-bot.git`  :
 
-1) Run `npm install`
+1) Run `npm install && docker pull iamtheiam/autoview-bot`
 2) Run `npm run build:docker`
 3) Follow the steps below.
 
