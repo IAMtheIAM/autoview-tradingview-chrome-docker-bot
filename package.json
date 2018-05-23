@@ -23,15 +23,9 @@
     "setup": "run-p loadChrome:withextension autoviewSetup",
     "start": "run-p loadChrome:withextension tradingViewLogin",
     "loadChrome:withextension": "google-chrome-stable --user-data-dir=\"chrome-profile\" --remote-debugging-address=0.0.0.0 --remote-debugging-port=9222 --load-extension=\\extension",
-    "run:zipdir": "npm run clean:zipdir && node zipdir.js",
-    "clean:zipdir": "rimraf -- autoview-trading-bot.tar.gz",
     "docker:build": "docker build -t autoviewbot:latest .",
     "autoviewSetup": "ts-node bot-setup.ts autoviewSetup",
     "tradingViewLogin": "ts-node bot.ts tradingViewLogin",
-    "loadChrome": "google-chrome-stable --user-data-dir=\"chrome-profile\" --remote-debugging-address=0.0.0.0 --remote-debugging-port=9222",
-    "build": "tsc",
-    "clean": "rimraf -- node_modules",
-    "npm:install": "npm install",
-    "loadAutoview:headless": "google-chrome-stable --disable-gpu --headless --remote-debugging-port=9222  --load-extension=\\extension"
+    "clean": "rimraf -- node_modules"
   }
 }
