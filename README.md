@@ -20,7 +20,7 @@ To build the image from source, clone this repo and then follow these steps:
 
 `git clone https://github.com/IAMtheIAM/autoview-tradingview-chrome-docker-bot.git`  :
 
-1) Run `npm install && docker pull iamtheiam/autoview-bot`
+1) Run `npm install`
 2) Run `npm run build:docker`
 3) Follow the steps below.
 
