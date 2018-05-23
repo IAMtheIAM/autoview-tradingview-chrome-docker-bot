@@ -12,7 +12,7 @@ While I could have used a Windows VPS and set it up easily through remote deskto
 
 To use the pre-compiled Docker Image, 
 
-1) Run `npm install && docker pull iamtheiam/autoview-bot` 
+1) Run `docker pull iamtheiam/autoview-bot` 
 2) Deploy the image to your server.
 3) Follow the steps below.
 
@@ -30,21 +30,15 @@ To build the image from source, clone this repo and then follow these steps:
  
 2) Create an Unbuntu 17.10 server with at least 2GB RAM
 
-1) Run `sudo apt update && sudo apt upgrade` to update all dependencies
+3) Run `sudo apt update && sudo apt upgrade` to update all dependencies
 
 4) Install Docker and Docker-compose. [See documentation](https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce)
 
-1) OPTIONAL but strongly recommended, install a strong firewall with bruteforce detection
+5) Copy `docker-compose.yml` to your server
 
-`apt install apf-firewall`
+6) From that same directory, run `sudo docker-compose up`
 
- To install BFD, see: [http://www.webhostgear.com/60.html](http://www.webhostgear.com/60.html)
-
- Configure your ports as desired. It is strongly suggested to run your VNC on a non-standard port for security purposes
-
-6) Run `sudo docker-compose up`
-
-7) Connect to your Docker container through VNC Viewer
+7) Connect to your Docker container through VNC Viewer. By default it runs on `port 3903` for security. You can change this to any port you want inside the `./launch-virtual-server.sh` script.
 
 8) Right click on the Desktop > Applications > Shell > Bash
 
@@ -55,6 +49,14 @@ To build the image from source, clone this repo and then follow these steps:
 11) Open up a new tab `localhost:9222` and click Autoview. Now you can see the debugging output for autoview to see if its working.
 
 12) Setup your TradingView.com alerts and watch them get triggered automatically 24/7!
+
+1) OPTIONAL, but strongly recommended: Install a strong firewall with bruteforce detection
+
+`apt install apf-firewall`
+
+ To install BFD, see: [http://www.webhostgear.com/60.html](http://www.webhostgear.com/60.html)
+
+ Configure your ports as desired. It is strongly suggested to run your VNC on a non-standard port for security purposes
 
 
 If you have any tips or suggestions for improvement, or constructive critisism, open an issue ticket here on GitHub and I will respond to you soon.
