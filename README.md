@@ -25,26 +25,26 @@ To build the image from source, clone this repo and then follow these steps:
 3) Follow the steps below.
 
 ## Deployment and Startup
-
-1) OPTIONAL: To automate the process of initially entering your autoview credentials, open `bot-setup.ts` and enter your API key and secret there. To automate logging in to TradingView.com, open `bot.ts` and enter your username and password there
  
-2) Create an Unbuntu 17.10 server with at least 2GB RAM
+1) Create an Unbuntu 17.10 server with at least 2GB RAM
 
-3) Run `sudo apt update && sudo apt upgrade` to update all dependencies
+2) Run `sudo apt update && sudo apt upgrade` to update all dependencies
 
-4) Install Docker and Docker-compose. [See documentation](https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce)
+3) Install Docker and Docker-compose. [See documentation](https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce)
 
-5) Copy `docker-compose.yml` to your server
+4) Upload `docker-compose.yml` and `launch-virtual-display.sh` to your server
 
-6) From that same directory, run `sudo docker-compose up`
+5) From that same directory, run `sudo docker-compose up`
 
-7) Connect to your Docker container through VNC Viewer. By default it runs on `port 3903` for security. You can change this to any port you want inside the `./launch-virtual-server.sh` script.
+6) Connect to your Docker container through VNC Viewer. By default it runs on `port 3903` for security. You can change this to any port you want inside the `./launch-virtual-server.sh` script.
 
-8) Right click on the Desktop > Applications > Shell > Bash
+7) Right click on the Desktop > Applications > Shell > Bash
+
+8) OPTIONAL: To automate logging in to TradingView.com, `nano bot.ts` and enter your username and password on lines 3 and 4.
 
 9) `npm run setup` will run Autoview setup script (and load the Autoview extension automatically)
 
-10) `npm run start` will run Tradingview login script (and load the Autoview extension automatically)
+1) `npm run start` will run Tradingview login script (and load the Autoview extension automatically). If you did not enter your username and password into `bot.ts`, you will need to manually enter it when the login screen automatically appears after a few seconds (the bot will click login for you).
 
 11) Open up a new tab `localhost:9222` and click Autoview. Now you can see the debugging output for autoview to see if its working.
 

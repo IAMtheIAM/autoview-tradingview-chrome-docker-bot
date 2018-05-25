@@ -21,5 +21,5 @@ services:
     user: node
     privileged: true
     volumes: # use local disk data instead of image data. Useful for localhost development mode
-      - ./:/home/node/app/
+      - ./chrome-profile:/home/node/app/chrome-profile
       - /etc/localtime:/etc/localtime:ro # this syncs the Host server time into the Docker Container

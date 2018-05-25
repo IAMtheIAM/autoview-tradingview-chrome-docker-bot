@@ -25,6 +25,7 @@
     "loadChrome:withextension": "google-chrome-stable --user-data-dir=\"chrome-profile\" --remote-debugging-address=0.0.0.0 --remote-debugging-port=9222 --load-extension=\\extension",
     "docker:build": "docker build -t autoviewbot:latest .",
     "autoviewSetup": "ts-node bot-setup.ts autoviewSetup",
+    "autoviewDebugging": "ts-node bot-setup.ts autoviewDebugging",
     "tradingViewLogin": "ts-node bot.ts tradingViewLogin",
     "clean": "rimraf -- node_modules"
   }
