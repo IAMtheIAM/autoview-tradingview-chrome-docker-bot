@@ -9,48 +9,46 @@ This project aimed at solving the problem of running a bot locally which does no
 While I could have used a Windows VPS and set it up easily through remote desktop, I did not think of it before creating this, and so I created an Ubuntu 16.04 Docker image with an X-server installed and a VNC server to enable VNC connections (remote desktop). It works perfectly at running Autoview as a service and is easy to setup, only a couple simple steps.
 
 # Steps to get up and running:
-
-To use the pre-compiled Docker Image, 
-
-1) Login via SSH to your server
-2) Run `docker pull iamtheiam/autoview-bot`. This will pull the image from the public docker repository I created
-3) Follow the steps below.
-
-To build the image from source, clone this repo and then follow these steps:  
-
-`git clone https://github.com/IAMtheIAM/autoview-tradingview-chrome-docker-bot.git`  :
-
-1) Run `npm install`
-2) Run `npm run build:docker`
-3) Follow the steps below.
-
-## Deployment and Startup
  
 1) Create an Unbuntu 17.10 server with at least 2GB RAM
-
 2) Run `sudo apt update && sudo apt upgrade` to update all dependencies
+3) Install [Docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce) and [Docker-compose](https://docs.docker.com/compose/install/).
 
-3) Install Docker and Docker-compose. [See documentation](https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce)
+**To use the pre-compiled Docker Image:**
+1) Login via SSH to your server
+2) Run `docker pull iamtheiam/autoview-bot`. This will pull the image from the public docker repository I created
+3) Follow the steps in Deployment and Startup.
 
-4) Upload `docker-compose.yml` and `launch-virtual-display.sh` to your server
+**To build the image from source:**
+1) Run `git clone https://github.com/IAMtheIAM/autoview-tradingview-chrome-docker-bot.git`  :
+2) Run `npm install`
+3) Run `npm run build:docker`
+4) Upload the docker image to your server either via Dockerhub or [SSH, see instructions](https://stackoverflow.com/questions/23935141/how-to-copy-docker-images-from-one-host-to-another-without-via-repository):
+    1) (From your local machine) `docker save autoview-bot:latest | bzip2 | pv | \
+    ssh user@host 'bunzip2 | docker load'`
+5) Follow the steps in Deployment and Startup.
 
-5) From that same directory, run `sudo docker-compose up`
+## Deployment and Startup
 
-6) Connect to your Docker container through VNC Viewer. By default it runs on `port 3903` for security. You can change this to any port you want inside the `./launch-virtual-server.sh` script.
+1) Upload `docker-compose.yml` and `launch-virtual-display.sh` to your server.
 
-7) Right click on the Desktop > Applications > Shell > Bash
+2) From that same directory, run `sudo docker-compose up`
 
-8) OPTIONAL: To automate logging in to TradingView.com, `nano bot.ts` and enter your username and password on lines 3 and 4.
+3) Connect to your Docker container through VNC Viewer. By default it runs on `port 3903` for security. You can change this to any port you want inside the `./launch-virtual-server.sh` script.
 
-9) `npm run setup` will run Autoview setup script (and load the Autoview extension automatically)
+4) Right click on the Desktop > Applications > Shell > Bash
 
-1) `npm run start` will run Tradingview login script (and load the Autoview extension automatically). If you did not enter your username and password into `bot.ts`, you will need to manually enter it when the login screen automatically appears after a few seconds (the bot will click login for you).
+5) **OPTIONAL**: To automate logging in to TradingView.com, `nano bot.ts` and enter your username and password on lines 3 and 4. 
 
-11) Open up a new tab `localhost:9222` and click Autoview. Now you can see the debugging output for autoview to see if its working.
+6) Manually setup your Autoview credentials like normal in the extension options (click the Autoview extension icon and go to Settings). **OPTIONAL**: To automate adding API credentials into Autoview, `nano bot-setup.ts` and customize the script for the exchanges you will use and your API keys. Then run `npm run setup` to run the Autoview setup script (and load the Autoview extension automatically). Delete the `bot-setup.ts` script when you are done with `rm bot-setup.ts`
 
-12) Setup your TradingView.com alerts and watch them get triggered automatically 24/7!
+7) Run `npm run start` to run load Chrome with the Autoview extension automatically installed. If you did not enter your username and password into `bot.ts`, you will need to manually enter it when the login screen automatically appears after a few seconds (the bot will click login for you).
 
-1) OPTIONAL, but strongly recommended: Install a strong firewall with bruteforce detection
+8) Open up a new tab `localhost:9222` and click Autoview. Now you can see the debugging output for autoview to see if its working.
+
+9) Setup your TradingView.com alerts and watch them get triggered automatically 24/7!
+
+10) OPTIONAL, but strongly recommended: Install a strong firewall with bruteforce detection
 
 `apt install apf-firewall`
 
