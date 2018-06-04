@@ -12,8 +12,8 @@ While I could have used a Windows VPS and set it up easily through remote deskto
 
 To use the pre-compiled Docker Image, 
 
-1) Run `docker pull iamtheiam/autoview-bot` 
-2) Deploy the image to your server.
+1) Login via SSH to your server
+2) Run `docker pull iamtheiam/autoview-bot`. This will pull the image from the public docker repository I created
 3) Follow the steps below.
 
 To build the image from source, clone this repo and then follow these steps:  
