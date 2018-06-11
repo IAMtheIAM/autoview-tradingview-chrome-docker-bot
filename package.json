@@ -20,12 +20,13 @@
   "scripts": {
     "server": "docker-compose up",
     "chrome": "npm run loadChrome:withextension",
-    "setup": "run-p loadChrome:withextension autoviewSetup",
-    "start": "run-p loadChrome:withextension tradingViewLogin",
+    "setup": "run-p loadChrome:withextension autoViewSetup",
+    "start": "./keep-chrome-alive.sh",
+    "startbot": "run-p loadChrome:withextension tradingViewLogin autoViewDebugging",
     "loadChrome:withextension": "google-chrome-stable --user-data-dir=\"chrome-profile\" --remote-debugging-address=0.0.0.0 --remote-debugging-port=9222 --load-extension=\\extension",
     "docker:build": "docker build -t iamtheiam/autoview-bot:latest .",
-    "autoviewSetup": "ts-node bot-setup.ts autoviewSetup",
-    "autoviewDebugging": "ts-node bot-setup.ts autoviewDebugging",
+    "autoViewSetup": "ts-node bot-setup.ts autoViewSetup",
+    "autoViewDebugging": "ts-node bot.ts autoViewDebugging",
     "tradingViewLogin": "ts-node bot.ts tradingViewLogin",
     "clean": "rimraf -- node_modules"
   }

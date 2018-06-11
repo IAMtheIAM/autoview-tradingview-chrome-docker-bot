@@ -1,5 +1,10 @@
 // This file automates logging into Autoview, useful if you have a lot of exchanges.
 
+let username1 = ''; // enter your TradingView.com user name here
+let password1 = ''; // enter your TradingView.com password here
+let username2 = ''; // enter your TradingView.com user name here
+let password2 = ''; // enter your TradingView.com password here
+
 import { Chromeless } from 'chromeless';
 
 declare var TradingView;
@@ -22,8 +27,8 @@ module.exports = {
             .wait(2000)
             .click('[data-page="exchange-kraken"]')
             .wait(200)
-            .type('', '#exchange-kraken-private-0') // private key
-            .type('', '#exchange-kraken-public-0') // public key
+            .type(username1, '#exchange-kraken-private-0') // private key
+            .type(password1, '#exchange-kraken-public-0') // public key
             .click('button[name="test"][data-exchange="KRAKEN"]')
             .wait(200)
             .click('button[data-action="action_access_save"][data-exchange="KRAKEN"]')
@@ -44,8 +49,8 @@ module.exports = {
             .wait(2000)
             .click('[data-page="exchange-bitfinex"]')
             .wait(200)
-            .type('', '#exchange-bitfinex-private-0') // private key
-            .type('', '#exchange-bitfinex-public-0') // public key
+            .type(username2, '#exchange-bitfinex-private-0') // private key
+            .type(password2, '#exchange-bitfinex-public-0') // public key
             .click('button[name="test"][data-exchange="BITFINEX"]')
             .wait(200)
             .click('button[data-action="action_access_save"][data-exchange="BITFINEX"]')
