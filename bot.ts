@@ -4,7 +4,6 @@ let tvUsername = ''; // enter your TradingView.com user name here
 let tvPassword = ''; // enter your TradingView.com password here
 
 import { Chromeless } from 'chromeless';
-declare var TradingView;
 
 // Make this runnable from package.json through NPM scripts using `make-runnable`
 module.exports = {
@@ -15,7 +14,7 @@ module.exports = {
             waitTimeout: 20000
         });
 
-        const screenshot = await chromeless
+        const tradingView = await chromeless
             .setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3430.0 Safari/537.36')
             // .setViewport({width: 2485, height: 1380, scale: 1})
             .goto('https://www.tradingview.com/')
@@ -28,7 +27,6 @@ module.exports = {
                 //     return false;
                 // }
             })
-
             .wait(4000)
             .wait('a.tv-header__link--signin')
             .click('a.tv-header__link--signin')
@@ -45,11 +43,6 @@ module.exports = {
             .catch((err) => {
                 console.error(err);
             });
-        //await chromeless.end(); //closes chrome tab and ends chromless instance process
-
-
-        //console.log(screenshot); // prints local file path or S3 url
-
     }, 
 
     autoViewDebugging: async function () {
@@ -58,7 +51,7 @@ module.exports = {
             waitTimeout: 20000
         });
 
-        const screenshot = await chromeless
+        const autoView = await chromeless
             .setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3430.0 Safari/537.36')
             // .setViewport({width: 2485, height: 1380, scale: 1})
             .goto('http://localhost:9222/')
@@ -68,8 +61,6 @@ module.exports = {
             .catch((err) => {
                 console.error(err);
             });
-
-        //console.log(screenshot); // prints local file path or S3 url
 
     }, 
 

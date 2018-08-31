@@ -22,11 +22,16 @@ RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
 # Copy app dependencies
 COPY ./launch-virtual-display.sh \
+keep-chrome-alive.sh \
 bot.ts bot-setup.ts \
 package.json \
 package-lock.json \
 tsconfig.json \
 $HOME/app/
+
+# Directories must be copied like this, since it only takes the directory contents, not the directory itself
+COPY extension \
+$HOME/app/extension
 
 ## Install latest chrome dev package.
 ## Note: this installs the necessary libs to make the bundled version of Chromium that Puppeteer installs, work. Also works for Chromeless, and Chrome in -headless mode.

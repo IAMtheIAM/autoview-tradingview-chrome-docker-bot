@@ -30,11 +30,12 @@ While I could have used a Windows VPS and set it up easily through remote deskto
 
 ## Deployment and Startup
 
-1) Upload `docker-compose.yml` and `launch-virtual-display.sh` to your server.
+1) Upload `docker-compose.yml` and `launch-virtual-display.sh` to your server. 
+NOTE 1: The default VNC password is 'yourpassword' - you should change this in `docker-compose.yml` to a secure password. NOTE 2: By default it runs on `port 3903` for security. You can change this to any port you want inside `./launch-virtual-server.sh` on line 82. 
 
 2) From that same directory, run `sudo docker-compose up`
 
-3) Connect to your Docker container through VNC Viewer. By default it runs on `port 3903` for security. You can change this to any port you want inside the `./launch-virtual-server.sh` script.
+3) Connect to your Docker container through VNC Viewer. 
 
 4) Right click on the Desktop > Applications > Shell > Bash
 

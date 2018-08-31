@@ -1,22 +1,22 @@
 // This file automates logging into Autoview, useful if you have a lot of exchanges.
+// You can add additional exchanges here by duplicating lines 18-38 and modifying as needed
 
-let username1 = ''; // enter your TradingView.com user name here
-let password1 = ''; // enter your TradingView.com password here
-let username2 = ''; // enter your TradingView.com user name here
-let password2 = ''; // enter your TradingView.com password here
+let krakenPrivateKey = ''; // enter your Kraken private key here
+let krakenPublicKey = ''; // enter your Kraken public key here
+let bitfinexPrivateKey = ''; // enter your Bitfinex private key here
+let bitfinexPublicKey = ''; // enter your Bitfinex public key here
 
 import { Chromeless } from 'chromeless';
 
-declare var TradingView;
-
 module.exports = {
-    autoviewSetup: async function () {
+    autoViewSetup: async function () {
         const chromeless = new Chromeless({
             launchChrome: true,
             waitTimeout: 20000
         });
 
-        const kraken = await chromeless
+        // Kraken Setup
+        await chromeless
             .setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3430.0 Safari/537.36')
             // .setViewport({width: 2485, height: 1400, scale: 1})
             .goto('chrome-extension://okdhadoplaoehmeldlpakhpekjcpljmb/options.html')
@@ -27,8 +27,8 @@ module.exports = {
             .wait(2000)
             .click('[data-page="exchange-kraken"]')
             .wait(200)
-            .type(username1, '#exchange-kraken-private-0') // private key
-            .type(password1, '#exchange-kraken-public-0') // public key
+            .type(krakenPrivateKey, '#exchange-kraken-private-0') // private key
+            .type(krakenPublicKey, '#exchange-kraken-public-0') // public key
             .click('button[name="test"][data-exchange="KRAKEN"]')
             .wait(200)
             .click('button[data-action="action_access_save"][data-exchange="KRAKEN"]')
@@ -38,7 +38,8 @@ module.exports = {
             });
         console.log('Finished Enabling 1 Exchange! (Kraken)'); // prints local file path or S3 url
 
-        const bitfinex = await chromeless
+        // Bitfinex Setup
+        await chromeless
             .setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3430.0 Safari/537.36')
             // .setViewport({width: 2485, height: 1400, scale: 1})
             .goto('chrome-extension://okdhadoplaoehmeldlpakhpekjcpljmb/options.html')
@@ -49,8 +50,8 @@ module.exports = {
             .wait(2000)
             .click('[data-page="exchange-bitfinex"]')
             .wait(200)
-            .type(username2, '#exchange-bitfinex-private-0') // private key
-            .type(password2, '#exchange-bitfinex-public-0') // public key
+            .type(bitfinexPrivateKey, '#exchange-bitfinex-private-0') // private key
+            .type(bitfinexPublicKey, '#exchange-bitfinex-public-0') // public key
             .click('button[name="test"][data-exchange="BITFINEX"]')
             .wait(200)
             .click('button[data-action="action_access_save"][data-exchange="BITFINEX"]')
@@ -60,10 +61,7 @@ module.exports = {
             });
         console.log('Finished Enabling 1 Exchange! (Bitfinex)'); // prints local file path or S3 url
 
-
-
         await chromeless.end();
-
     }
 }
 
