@@ -31,7 +31,7 @@ While I could have used a Windows VPS and set it up easily through remote deskto
 ## Deployment and Startup
 
 1) Upload `docker-compose.yml` and `launch-virtual-display.sh` to your server. 
-NOTE 1: The default VNC password is 'yourpassword' - you should change this in `docker-compose.yml` to a secure password. NOTE 2: By default it runs on `port 3903` for security. You can change this to any port you want inside `./launch-virtual-server.sh` on line 82. 
+NOTE 1: The default VNC password is `yourpassword` - you should change this in `docker-compose.yml` to a secure password. NOTE 2: By default it runs on `port 3903` for security. You can change this to any port you want inside `./launch-virtual-server.sh` on line 82. 
 
 2) From that same directory, run `sudo docker-compose up`
 
@@ -39,13 +39,13 @@ NOTE 1: The default VNC password is 'yourpassword' - you should change this in `
 
 4) Right click on the Desktop > Applications > Shell > Bash
 
-5) **OPTIONAL**: To automate logging in to TradingView.com, `nano bot.ts` and enter your username and password on lines 3 and 4. 
+5) **OPTIONAL**: To automate logging in to TradingView.com, `nano bot.ts` and enter your username and password on lines 3 and 4. NOTE: The automation library this script depends on is `Chromeless`, which sometimes acts funny and doesn't open the browser tabs correctly. Just manually open `tradingview.com` and `localhost:9222` if this happens.
 
 6) Manually setup your Autoview credentials like normal in the extension options (click the Autoview extension icon and go to Settings). **OPTIONAL**: To automate adding API credentials into Autoview, `nano bot-setup.ts` and customize the script for the exchanges you will use and your API keys. Then run `npm run setup` to run the Autoview setup script (and load the Autoview extension automatically). Delete the `bot-setup.ts` script when you are done with `rm bot-setup.ts`
 
 7) Run `npm run start` to run load Chrome with the Autoview extension automatically installed. If you did not enter your username and password into `bot.ts`, you will need to manually enter it when the login screen automatically appears after a few seconds (the bot will click login for you).
 
-8) Open up a new tab `localhost:9222` and click Autoview. Now you can see the debugging output for autoview to see if its working.
+8) Within tab `localhost:9222`, click the one that says Autoview. Now you can see the debugging output for autoview to see if its working.
 
 9) Setup your TradingView.com alerts and watch them get triggered automatically 24/7!
 
