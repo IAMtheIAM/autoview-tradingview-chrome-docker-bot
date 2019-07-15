@@ -9,7 +9,7 @@ services:
     command: >
         sh -c "
             echo Starting Virtual Display Server... &&
-            ./launch-virtual-display.sh
+            sudo ./launch-virtual-display.sh
         "
     ports:
       - "3903:3903" # HOST:CONTAINER - NOTE THIS PORT MUST MATCH THE -rfbport #### SET IN ./launch-virtual-display.sh
