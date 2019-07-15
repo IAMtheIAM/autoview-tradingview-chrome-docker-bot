@@ -59,3 +59,5 @@ NOTE 1: The default VNC password is `yourpassword` - you should change this in `
 
 
 If you have any tips or suggestions for improvement, or constructive critisism, open an issue ticket here on GitHub and I will respond to you soon.
+
+**Note: I have recently switched to using [Gekko Bot](https://github.com/askmike/gekko) for automated trading, as it is not dependent on TradingView.com alerts in any way, and therefore, significantly more reliable. It is written in JavaScript, which was a plus for me. The downside is that you have to recreate your PineScript strategies from scratch in JavaScript (although it's pretty easy to do). However, the setup demonstrated here in this repo still works just fine, you will just want to monitor your VM and make sure the browser doesn't crash or get disconnected from TradingView, which can happen if you open your chart on multiple devices.**
